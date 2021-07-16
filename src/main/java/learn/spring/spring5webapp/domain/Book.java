@@ -1,6 +1,6 @@
 package learn.spring.spring5webapp.domain;
 
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -28,18 +29,30 @@ public class Book {
 	private String title;
 	private String isbn;
 	
+	@ManyToOne
+	private Publisher publisher;
+	
+	
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
 	@ManyToMany
 	@JoinTable( name="author_book" , joinColumns = @JoinColumn(name = "Book_Id"), 
 	            inverseJoinColumns = @JoinColumn(name = "Author_Id"))
-	private Set<Author>authors;
+	private Set<Author>authors = new HashSet<>();
 	
 	public Book() {}
 	
-	public Book(String title, String isbn, Set<learn.spring.spring5webapp.domain.Author> author) {
+	public Book(String title, String isbn) {
 		super();
 		this.title = title;
 		this.isbn = isbn;
-		authors = author;
+		
 	}
 
 	public String getTitle() {
@@ -64,6 +77,28 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		return id == other.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", authors=" + authors + "]";
 	}
 	
 	

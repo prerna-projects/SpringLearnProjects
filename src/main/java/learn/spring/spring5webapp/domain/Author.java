@@ -1,5 +1,7 @@
 package learn.spring.spring5webapp.domain;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -16,17 +18,17 @@ public class Author {
 	
 	@ManyToMany(mappedBy = "authors")
 	
-	private Set<Book> Books;
+	private Set<Book> Books = new HashSet<>();
 	
 	public Author() {
 		
 	}
 	
-	public Author(String firstName, String lastName, Set<Book> books) {
+	public Author(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		Books = books;
+		
 	}
 	
 	public Set<Book> getBooks() {
@@ -55,4 +57,29 @@ public class Author {
 	public void setBookId(long bookId) {
 		BookId = bookId;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(BookId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Author other = (Author) obj;
+		return BookId == other.BookId;
+	}
+
+	@Override
+	public String toString() {
+		return "Author [BookId=" + BookId + ", firstName=" + firstName + ", lastName=" + lastName + ", Books=" + Books
+				+ "]";
+	}
+	
+	
 }
