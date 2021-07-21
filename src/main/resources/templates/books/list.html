@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<HTML lang="en" xmlns:th="http://www.tyhmeleaf.org">
+	<HEAD>
+		<TITLE>Spring Projects</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>Book List</H1>
+		<TABLE>
+			<tr>
+			<TH>ID</TH>
+			<TH>BOOK NAME </TH>
+			<TH>Publisher</TH>
+			</tr>
+			<tr th:each="book : ${books}">
+				<TD th:text=${book.id}>101</TD>
+				<TD th:text=${book.title}>HP </TD>
+				<TD th:text=${book.publisher.name}>abc company</td>
+			</tr>
+		</TABLE>
+	</BODY>
+</HTML>
